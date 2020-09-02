@@ -62,7 +62,7 @@
 
         <div class="cs-lucky-menu__right">
           <transition name="fade">
-            <div v-if="isAccountShow && getUser" @mouseleave="isAccountShow = false" class="account__drop">
+            <div v-if="isAccountShow && !isEmpty(getUser)" @mouseleave="isAccountShow = false" class="account__drop">
               <p class="account__name">
                 {{ getUser.username }}
               </p>
@@ -76,7 +76,7 @@
               </button>
             </div>
           </transition>
-          <div v-if="getUser" @click="isAccountShow ? isAccountShow = false : isAccountShow = true" class="cs-lucky-menu__right-2">
+          <div v-if="!isEmpty(getUser)" @click="isAccountShow ? isAccountShow = false : isAccountShow = true" class="cs-lucky-menu__right-2">
             <img :src="getUser.avatar" alt="" class="cs-lucky-menu__avatar">
             <div class="cs-lucky-menu__wrapper">
               <div class="cs-lucky-menu__text">
@@ -89,7 +89,7 @@
               </div>
             </div>
           </div>
-          <div v-else class="cs-lucky-menu__login">
+          <div v-if="isEmpty(getUser)" class="cs-lucky-menu__login">
             <a href="/auth/steam" class="cs-lucky-menu__steam">
               <SteamIcon class="icon" />
             </a>
