@@ -89,7 +89,7 @@
               </div>
             </div>
           </div>
-          <div v-if="isEmpty(getUser)" class="cs-lucky-menu__login">
+          <div v-else class="cs-lucky-menu__login">
             <a href="/auth/steam" class="cs-lucky-menu__steam">
               <SteamIcon class="icon" />
             </a>
@@ -155,6 +155,13 @@ export default {
     ...mapMutations({
       setWindowSize: 'common/setWindowSize',
     }),
+    isEmpty(obj) {
+  for (let key in obj) {
+    // если тело цикла начнет выполняться - значит в объекте есть свойства
+    return false;
+  }
+  return true;
+},
     showNotifications () {
       // this.isLangsShow = false
       this.isNotificationShow = this.isNotificationShow !== true;
