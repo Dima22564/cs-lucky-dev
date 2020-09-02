@@ -1,0 +1,32 @@
+=bg($url)
+  background-image: url($url)
+  -webkit-background-size: cover
+  -moz-background-size: cover
+  -o-background-size: cover
+  background-size: cover
+  background-position-x: center
+  background-position-y: center
+  background-repeat: no-repeat
+
+=xl
+  @media (max-width: 1200px)
+    @content
+
+=lg
+  @media (max-width: 1080px)
+    @content
+
+=md
+  @media (max-width: 768px)
+    @content
+
+=sm
+  @media (max-width: 576px)
+    @content
+
+=media($size)
+  @media (max-width: $size + 'px')
+    @content
+
+=shadow
+  box-shadow: 8px 8px 24px 0 rgba(9, 14, 20, 0.4), -4px -4px 8px 0 rgba(224, 224, 255, 0.04), 0 1px 1px 0 rgba(9, 14, 20, 0.4)

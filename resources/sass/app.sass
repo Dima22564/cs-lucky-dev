@@ -1,0 +1,233 @@
+@import './_mix'
+@import './_var'
+@import './components/_icon'
+@import './components/_scroll'
+@import 'node_modules/bootstrap/scss/bootstrap-reboot'
+@import './pages/_faq'
+@import 'node_modules/slick-carousel/slick/slick'
+a
+  font-size: inherit
+  color: inherit
+  transition: all 0.1s
+  &:hover
+    text-decoration: none
+    color: inherit
+html
+  box-sizing: border-box
+label
+  margin: 0
+body
+  font-size: 14px
+  line-height: 24px
+  font-family: 'Montserrat', sans-serif
+  font-weight: 600
+  background: $main-dark-color
+  color: $white
+p
+  margin: 0
+
+button, input, textarea, div, span, a
+  outline: none !important
+  font-family: 'Montserrat', sans-serif
+
+.mobileChat
+  +lg
+    display: none !important
+
+.cs-lucky-container
+  padding: 0 0 0 20px
+  max-width: 100%
+  width: 100%
+  +lg
+    padding: 0 20px 0 20px
+
+.cs-lucky-main
+  padding: 24px 0 0
+  +lg
+    padding: 0
+  &-faqs
+    .cs-lucky-container
+      +lg
+        padding: 0 !important
+  &--left
+    max-width: 356px
+    width: 100%
+    flex-shrink: 0
+    +lg
+      max-width: 100%
+  &--center
+    padding: 0 24px
+    width: calc(100% - 332px - 352px - 24px)
+    +lg
+      max-width: 100%
+      width: 100%
+      padding: 0
+
+.cs-lucky-row
+  display: flex
+  justify-content: space-between
+  +lg
+    flex-direction: column
+.btn
+  border-radius: 24px
+  padding: 12px 24px
+  border: none
+  cursor: pointer
+  transition: all 0.2s
+  font-family: 'Montserrat', sans-serif
+  display: inline-block
+  user-select: none
+  &-arrow
+    display: flex
+    align-items: center
+    justify-content: space-between
+    padding: 12px 16px 12px 24px
+  &__icon
+    margin-left: 12px
+    font-size: 20px
+    height: 13px
+    &_left
+      margin: 0 12px 0 0
+  &_gray
+    background: rgba(224, 224, 255, 0.02)
+    font-size: 14px
+    color: rgba(224, 224, 255, 0.6)
+    padding: 6px 16px
+    font-weight: 500
+    &:hover
+      color: rgba(224, 224, 255, 0.6)
+      background: rgba(224, 224, 255, 0.05)
+.btn_primary_disabled
+  color: rgba(224, 224, 255, 0.24)
+  cursor: initial
+  box-shadow: 0 0 8px -4px rgba(0, 187, 255, 0.12), 0 0 24px 0 rgba(0, 187, 255, 0.24), 0 0 4px -1px rgba(10, 70, 82, 0.12), 0 0 1px 0 rgba(0, 187, 255, 0.24)
+  background-image: linear-gradient(114deg, #00ffaa, #00bbff 53%, #4579f5 100%)
+
+.btn_primary
+  color: white
+  font-weight: 600
+  box-shadow: 0 8px 8px -4px rgba(0, 187, 255, 0.12), 0 16px 24px 0 rgba(0, 187, 255, 0.24), 0 2px 4px -1px rgba(10, 70, 82, 0.12), 0 0 1px 0 rgba(0, 187, 255, 0.24)
+  background-image: linear-gradient(114deg, #00ffaa, #00bbff 53%, #4579f5 100%)
+  &:hover
+    color: white
+    box-shadow: 0 12px 12px -4px rgba(0, 187, 255, 0.12), 0 24px 32px 0 rgba(0, 187, 255, 0.24), 0 4px 4px -1px rgba(10, 70, 82, 0.12), 0 1px 1px 0 rgba(0, 187, 255, 0.24)
+    background-image: linear-gradient(to bottom, rgba(224, 224, 255, 0.12), rgba(224, 224, 255, 0.12)), linear-gradient(114deg, #00ffaa, #00bbff 53%, #4579f5 100%)
+  &:active
+    box-shadow: 0 8px 8px -4px rgba(0, 187, 255, 0.12), 0 8px 16px 0 rgba(0, 187, 255, 0.24), 0 1px 4px -1px rgba(10, 70, 82, 0.12), 0 0 1px 0 rgba(0, 187, 255, 0.24)
+    background-image: linear-gradient(114deg, #00ffaa, #00bbff 53%, #4579f5 100%)
+    color: white
+
+.btn_secondary
+  box-shadow: 0 8px 8px -4px rgba(0, 187, 255, 0.06), 0 16px 24px 0 rgba(0, 187, 255, 0.12), 0 2px 4px -1px rgba(27, 10, 82, 0.06), 0 0 1px 0 rgba(0, 187, 255, 0.12), inset 0 2px 6px 0 rgba(0, 187, 255, 0.4)
+  background-image: linear-gradient(108deg, #33334b, #27273e 50%, #202036)
+  color: white
+  font-weight: 600
+  &:hover
+    color: white
+    box-shadow: 0 12px 12px -4px rgba(0, 187, 255, 0.06), 0 24px 32px 0 rgba(0, 187, 255, 0.12), 0 4px 4px -1px rgba(10, 70, 82, 0.06), 0 1px 1px 0 rgba(0, 187, 255, 0.12), inset 0 0 8px 0 rgba(0, 187, 255, 0.4)
+    background-image: linear-gradient(to bottom, rgba(224, 224, 255, 0.06), rgba(224, 224, 255, 0.06)), linear-gradient(114deg, #33334b, #27273e 50%, #202036 100%)
+  &:active
+    box-shadow: 0 8px 8px -4px rgba(0, 187, 255, 0.06), 0 8px 16px 0 rgba(0, 187, 255, 0.12), 0 1px 4px -1px rgba(10, 70, 82, 0.06), 0 0 1px 0 rgba(0, 187, 255, 0.12), inset 0 3px 12px 0 rgba(0, 187, 255, 0.4)
+    background-image: linear-gradient(114deg, #33334b, #27273e 50%, #202036 100%)
+    color: white
+  &_disabled
+    box-shadow: 0 0 8px -4px rgba(0, 187, 255, 0.06), 0 0 24px 0 rgba(0, 187, 255, 0.12), 0 0 4px -1px rgba(10, 70, 82, 0.06), 0 0 1px 0 rgba(0, 187, 255, 0.12), inset 0 0 6px 0 rgba(0, 187, 255, 0.4)
+    background-image: linear-gradient(114deg, #33334b, #27273e 50%, #202036 100%)
+    color: rgba(255, 255, 255, 0.24)
+    cursor: initial
+
+//.toggler
+//  cursor: pointer
+//  position: relative
+//  &_active
+//    .toggler__way
+//      background: #00bbff
+//    .toggler__circle
+//      background: white
+//      right: 2px
+//      left: initial
+//  &__input
+//    display: none
+//  &__way
+//    width: 40px
+//    height: 24px
+//    border-radius: 12px
+//    background-color: rgba(255, 255, 255, 0.2)
+//    cursor: pointer
+//  &__circle
+//    width: 20px
+//    height: 20px
+//    border-radius: 12px
+//    position: absolute
+//    top: 2px
+//    left: 2px
+//    transition: all 0.5s
+//    background: #27273e
+//    cursor: pointer
+
+.nuxt-content
+  +lg
+    margin-top: 48px
+    margin-bottom: 98px
+
+.toggler
+  cursor: pointer
+  position: relative
+  z-index: 55
+  &_active
+    .toggler__way
+    background: $main-gradient
+    box-shadow: none
+    .toggler__circle
+      background: white
+      right: 2px
+      left: initial
+  &__input
+    display: none
+  &__way
+    width: 92px
+    height: 24px
+    border-radius: 12px
+    background-color: rgba(255, 255, 255, 0.2)
+    cursor: pointer
+    box-shadow: inset 8px 8px 40px 0 rgba(9, 14, 20, 0.4), inset -4px -4px 8px 0 rgba(224, 224, 255, 0.04), inset 0 1px 1px 0 rgba(9, 14, 20, 0.4)
+    background-image: linear-gradient(to bottom, #090e14, #222529 57%, #2d2f33)
+  &__circle
+    width: 20px
+    height: 20px
+    border-radius: 12px
+    position: absolute
+    top: 2px
+    left: 2px
+    transition: all 0.7s
+    box-shadow: 8px 8px 24px 0 rgba(9, 14, 20, 0.4), -4px -4px 8px 0 rgba(224, 224, 255, 0.04), 0 1px 1px 0 rgba(9, 14, 20, 0.4), inset 0 -2px 1px 0 rgba(9, 14, 20, 0.8)
+    background-image: linear-gradient(to bottom, #383a3d, #2d2f33)
+    cursor: pointer
+.faq
+  &__title
+    display: flex
+    align-items: center
+    justify-content: space-between
+    margin-bottom: 32px
+  &__filter
+    font-size: 14px
+    color: rgba(224, 224, 255, 0.6)
+    font-weight: 500
+    display: flex
+    align-items: center
+    span
+      padding: 6px 16px
+      border-radius: 18px
+      cursor: pointer
+      transition: all 0.1s
+      &:hover
+        color: white
+      &:not(:last-child)
+        margin-right: 16px
+    &_active
+      box-shadow: 0 8px 8px -4px rgba(0, 187, 255, 0.12), 0 16px 24px 0 rgba(0, 187, 255, 0.24), 0 2px 4px -1px rgba(10, 70, 82, 0.12), 0 0 1px 0 rgba(0, 187, 255, 0.24)
+      background-image: linear-gradient(109deg, #00ffaa, #00bbff 53%, #4579f5)
+      color: white
+  &__select
+    width: initial
+    min-width: 200px

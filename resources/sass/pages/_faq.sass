@@ -1,0 +1,36 @@
+@import '../_var.sass'
+@import '../_mix.sass'
+.faqs
+  /*overflow-y: auto*/
+  height: calc(100vh - 56px - 16px - 98px - 14px)
+  padding-right: 24px
+  +lg
+    height: calc(100vh - 48px - 82px - 24px)
+    margin: 0
+    padding-right: 0
+  &-content
+    width: 100%
+    padding-right: 24px
+    display: flex
+    flex-direction: column
+    justify-content: space-between
+    +lg
+      padding-right: 0
+  &__faq
+    margin-bottom: 24px
+    +lg
+      margin-bottom: 0
+    &:last-child
+      +lg
+        margin-bottom: 50px
+  &__wrapper
+    position: relative
+  &__bg
+    background-image: linear-gradient(to bottom, rgba(33, 36, 41, 0), #212429)
+    position: absolute
+    bottom: 0
+    left: 0
+    width: 100%
+    height: 128px
+    +lg
+      height: 70px

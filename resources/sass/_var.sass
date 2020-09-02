@@ -1,0 +1,43 @@
+$main-color: #ffaa00
+$main-gradient: linear-gradient(115deg, #eeff00, #ffaa00 51%, #ff5e00 100%)
+$main-dark-color: #212429
+
+$white: rgba(255, 255, 255, 1)
+$gray: rgba(224, 224, 255, 0.6)
+$dark-white: rgba(255, 255, 255, 0.8)
+
+
+$secondary-gradient: linear-gradient(115deg, #ff5e00, #f54562 54%, #c32de1 100%)
+$dark-gradient: linear-gradient(135deg, #2d2f33 1%, #272a2e 52%, #222529)
+
+$main-shadow: 0 8px 8px -4px rgba(255, 170, 0, 0.12), 0 16px 24px 0 rgba(255, 170, 0, 0.24), 0 2px 4px -1px rgba(10, 70, 82, 0.12), 0 0 1px 0 rgba(255, 170, 0, 0.24)
+$secondary-shadow: 0 8px 8px -4px rgba(245, 69, 98, 0.12), 0 16px 24px 0 rgba(245, 69, 98, 0.24), 0 2px 4px -1px rgba(27, 10, 82, 0.12), 0 0 1px 0 rgba(245, 69, 98, 0.24)
+
+$dark-shadow: 8px 8px 24px 0 rgba(9, 14, 20, 0.4), -4px -4px 8px 0 rgba(224, 224, 255, 0.04), 0 1px 1px 0 rgba(9, 14, 20, 0.4)
+
+=white($al, $t)
+  @if $t == 'bg'
+    background: rgba(255, 255, 255, $al)
+  @else
+    color: rgba(255, 255, 255, $al)
+
+
+%font-13-16
+  font-size: 13px
+  line-height: 16px
+
+%font-18-24
+  font-size: 18px
+  line-height: 24px
+
+%font-10-12
+  font-size: 10px
+  line-height: 12px
+%font-20-28
+  font-size: 20px
+  line-height: 28px
+
+%btn-refresh
+  border: none
+  background: none
+  padding: 0
