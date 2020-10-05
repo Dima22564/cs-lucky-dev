@@ -2,6 +2,7 @@
 
 namespace App;
 
+use http\Env\Request;
 use Illuminate\Database\Eloquent\Model;
 
 class Game extends Model
@@ -10,12 +11,21 @@ class Game extends Model
 
   public static $GAME_PREPARE = 0;
   public static $GAME_START = 1;
-  public static $GAME_CRUSHED = 2;
-  public static $GAME_END = 3;
+  public static $GAME_END = 2;
 
-  public function users()
+  protected $fillable = [
+    'hash',
+    'status',
+    'multiplier',
+    'skins',
+    'profit',
+    'players',
+    'bank'
+  ];
+
+  public function bets()
   {
-    return $this->belongsToMany(User::class, 'games_users');
+    $this->hasMany(Bet::class);
   }
 
   public static function generateHash($duration)
@@ -24,22 +34,9 @@ class Game extends Model
     return $hash;
   }
 
-  public static function generateMultiplier()
+  public static function generateMultiplier($st_num = 0, $end_num = 1, $mul = 1000000)
   {
-    try {
-      $multiplierInt = random_int(1, 20);
-    } catch (\Exception $e) {
-      $multiplierInt = rand(1, 20);
-    }
-    $multiplierFloat = rand(0, 100) / 100;
-    $multiplier = $multiplierInt + $multiplierFloat;
-    return $multiplier;
-  }
-
-  public static function generateDuration($multiplier)
-  {
-    // $duration = round((pow(2, $multiplier) - 1) / 2);
-    $duration = round(log($multiplier ,2));
-    return $duration;
+    if ($st_num > $end_num) return false;
+    return mt_rand($st_num * $mul, $end_num * $mul) / $mul;
   }
 }

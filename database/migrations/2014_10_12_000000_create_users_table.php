@@ -18,7 +18,7 @@ class CreateUsersTable extends Migration
       $table->string('username');
       $table->float('balance')->default(0);
       $table->string('trade_url')->nullable();
-      $table->string('refferal_link')->nullable();
+      $table->string('referral_link')->nullable();
       $table->timestamp('email_verified_at')->nullable();
       $table->string('password')->nullable();
       $table->string('avatar');

@@ -3,12 +3,24 @@
 namespace App;
 
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Support\Facades\DB;
+use Tymon\JWTAuth\Contracts\JWTSubject;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
-class User extends Authenticatable
+class User extends Authenticatable implements JWTSubject
 {
   use Notifiable;
+
+  public function getJWTIdentifier()
+  {
+    return $this->getKey();
+  }
+
+  public function getJWTCustomClaims()
+  {
+    return [];
+  }
 
   /**
    * The attributes that are mass assignable.
@@ -37,18 +49,23 @@ class User extends Authenticatable
     'email_verified_at' => 'datetime',
   ];
 
-  public function messages() {
+  public function messages()
+  {
     return $this->hasMany(Chat::class);
   }
 
-  public function games()
+  public function bets()
   {
-    return $this->belongsToMany(Game::class, 'games_users');
+    return $this->hasMany(Bet::class);
   }
 
-  public function betItems()
+  public function inventory()
   {
-    return $this->hasMany(BetItems::class);
+    return DB::table('inventories')
+      ->join('items', 'inventories.item_id', '=', 'items.id')
+      ->orderBy('items.price')
+      ->where('user_id', $this->id)
+      ->get();
   }
 
   public function winItems()

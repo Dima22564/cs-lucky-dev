@@ -17,7 +17,11 @@ class CreateGamesTable extends Migration
       $table->id();
       $table->string('hash')->nullable();
       $table->float('multiplier')->nullable();
-      $table->float('duration')->nullable();
+      $table->integer('skins')->default(0);
+      $table->integer('status')->nullable();
+      $table->float('profit')->default(0.00);
+      $table->integer('players')->default(0)->unsigned();
+      $table->float('bank')->default(0.00);
       $table->timestamps();
     });
   }
