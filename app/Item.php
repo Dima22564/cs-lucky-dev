@@ -12,4 +12,8 @@ class Item extends Model
   {
     return $this->belongsToMany(Bet::class, 'bet_item');
   }
+
+  public function winBet() {
+    return $this->hasOne(Bet::class);
+  }
 }

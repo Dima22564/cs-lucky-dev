@@ -14,7 +14,7 @@ class CreateInventoriesTable extends Migration
   public function up()
   {
     Schema::create('inventories', function (Blueprint $table) {
-      $table->id();
+      $table->id('inventory_id');
       $table->foreignId('user_id')->references('id')->on('users')->onDelete('cascade');
       $table->foreignId('item_id')->references('id')->on('items')->onDelete('cascade');
       $table->timestamps();

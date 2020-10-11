@@ -15,7 +15,7 @@ class Inventory extends JsonResource
   public function toArray($request)
   {
     return [
-      'id' => $this->id,
+      'id' => $this->inventory_id,
       'userId' => $this->user_id,
       'itemId' => $this->item_id,
       'image' => $this->image,

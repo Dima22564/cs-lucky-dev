@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -71,5 +72,18 @@ class User extends Authenticatable implements JWTSubject
   public function winItems()
   {
     return $this->hasMany(WinItems::class);
+  }
+
+  public function changeBalance($sum)
+  {
+    $user = User::find(Auth::user()->id);
+    $user->balance += $sum;
+    $user->save();
+  }
+
+  public function setBalance($sum) {
+    $user = User::find(Auth::user()->id);
+    $user->balance = $sum;
+    $user->save();
   }
 }

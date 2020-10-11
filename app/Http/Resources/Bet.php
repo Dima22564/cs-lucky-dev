@@ -23,7 +23,8 @@ class Bet extends JsonResource
       'items' => ItemResource::collection($this->whenLoaded('items')),
       'winBank' => $this->win_bank,
       'multiplier' => $this->multiplier,
-      'user' => $this->whenLoaded('user')
+      'user' => $this->whenLoaded('user'),
+      'winItem' => new ItemResource($this->whenLoaded('winItem'))
     ];
   }
 }

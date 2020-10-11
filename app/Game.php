@@ -20,12 +20,13 @@ class Game extends Model
     'skins',
     'profit',
     'players',
-    'bank'
+    'bank',
+    'color'
   ];
 
   public function bets()
   {
-    $this->hasMany(Bet::class);
+    return $this->hasMany(Bet::class);
   }
 
   public static function generateHash($duration)

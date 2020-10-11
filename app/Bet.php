@@ -32,5 +32,10 @@ class Bet extends Model
     return $this->belongsTo(Game::class);
   }
 
+  public function winItem()
+  {
+    return $this->belongsTo(Item::class, 'item_id');
+  }
+
 
 }

@@ -9,6 +9,7 @@ use App\Events\PrepareEnd;
 use App\Game;
 use App\Http\Resources\Bet as BetResource;
 use App\Http\Resources\Inventory as InventoryResource;
+use App\Http\Resources\Game as GameResource;
 use App\Item;
 use App\Jobs\NewGame;
 use Carbon\Carbon;
@@ -19,10 +20,28 @@ use Illuminate\Support\Facades\Cache;
 use App\Http\Controllers\API\BaseController as Controller;
 use App\Http\Resources\Item as ItemResource;
 use Illuminate\Support\Facades\DB;
-use mysql_xdevapi\Exception;
+use Illuminate\Support\Str;
 
 class GameController extends Controller
 {
+  public function index($id)
+  {
+    $game = Game::query()
+      ->where('hash', '01b9224e2b1d52b15540d4f42f70ef041c34e8d413a349e8c1eca8f3c3c803d3')
+      ->with(['bets' => function ($query) {
+        $query->with(['user' => function ($query2) {
+          $query2->select('id', 'avatar');
+        }]);
+        $query->with('items');
+        $query->with('winItem');
+      }])
+      ->first();
+
+    return $this->sendResponse([
+      'game' => new GameResource($game)
+    ], 'Ok', 200);
+  }
+
   public function crashBets()
   {
     try {
@@ -50,7 +69,8 @@ class GameController extends Controller
         ->sum('win_bank');
 
       $game->update([
-        'profit' => $bank - $win
+        'profit' => $bank - $win,
+        'color' => $this->detectColor($game->multiplier)
       ]);
       DB::commit();
 
@@ -103,6 +123,10 @@ class GameController extends Controller
 //        ->limit(1)
 //        ->delete();
 //    });
+    if (Auth::user()->balance < $bank) {
+      return $this->sendError('Not enough money!', [], 400);
+    }
+    Auth::user()->changeBalance($bank * -1);
 
 // Создаем ставку
     $bet = Bet::create([
@@ -137,6 +161,46 @@ class GameController extends Controller
     ], 'Ok', 200);
   }
 
+  public function takeBet(Request $request)
+  {
+    $multiplier = round($request->get('multiplier'), 2);
+    $game = $this->getGameInController();
+
+    $bet = Bet::query()
+      ->where('game_id', $game->id)
+      ->where('user_id', Auth::user()->id)
+      ->where('is_win', null)
+      ->first();
+
+    $win = round($bet->bank * $multiplier, 2);
+    $winItem = Item::query()
+      ->where('price', '<=', $win)
+      ->orderBy('price', 'DESC')
+      ->first();
+
+    $bet->update([
+      'is_win' => 1,
+      'win_bank' => $win,
+      'multiplier' => $multiplier,
+      'item_id' => $winItem->id
+    ]);
+
+//    TODO Add win item idW
+//
+    DB::table('inventories')
+      ->insert([
+        'user_id' => Auth::user()->id,
+        'item_id' => $winItem->id
+      ]);
+
+//    TODO change user balance
+
+    return $this->sendResponse([
+      'bet' => new BetResource($bet)
+    ], 'Ok', 200);
+
+  }
+
   public function autoTake(Request $request)
   {
     $users = json_decode($request->get('users'));
@@ -164,7 +228,8 @@ class GameController extends Controller
       $bet->update([
         'is_win' => 1,
         'win_bank' => $winBank,
-        'multiplier' => $multiplier
+        'multiplier' => $multiplier,
+        'item_id' => $winItem->id
       ]);
     }
 
@@ -234,7 +299,7 @@ class GameController extends Controller
           $multiplier = round(Game::generateMultiplier(1.00, 2.00), 2);
         }
       }
-      $strToHash = $multiplier . $profit . 'Some random string';
+      $strToHash = $multiplier . $profit . 'Some random string' . Str::random(32);
       $hash = hash('sha256', $strToHash);
       $game->update([
         'multiplier' => $multiplier,
@@ -265,8 +330,26 @@ class GameController extends Controller
   private function getLastGames()
   {
     return Game::orderBy('id', 'DESC')
-      ->select('id', 'hash', 'multiplier')
+      ->select('id', 'hash', 'multiplier', 'color')
       ->limit(20)
       ->get();
+  }
+
+  private function detectColor($multiplier)
+  {
+    if (1.00 <= $multiplier && $multiplier < 1.58) {
+      $color = DB::table('colors')->find(1)->color;
+    } elseif (1.58 <= $multiplier && $multiplier < 2.14) {
+      $color = DB::table('colors')->find(2)->color;
+    } elseif (2.14 <= $multiplier && $multiplier < 4.47) {
+      $color = DB::table('colors')->find(3)->color;
+    } elseif (4.47 <= $multiplier && $multiplier < 14.85) {
+      $color = DB::table('colors')->find(4)->color;
+    } elseif (14.85 <= $multiplier && $multiplier < 43.74) {
+      $color = DB::table('colors')->find(5)->color;
+    } else {
+      $color = DB::table('colors')->find(6)->color;
+    }
+    return $color;
   }
 }
