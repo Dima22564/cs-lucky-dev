@@ -59,12 +59,15 @@ class ItemController extends Controller
       return $this->sendError('Not enough money!', [], 400);
     }
 
-//    TODO delete items from inventory
     Auth::user()->setBalance(round($remain, 2));
-//    if ($changeItemsIds) {
-//      DB::table('inventories')
-//        ->delete($changeItemsIds);
-//    }
+
+    foreach ($changeItemsIds as $i) {
+      DB::table('inventories')
+        ->where('user_id', Auth::user()->id)
+        ->where('item_id', $i)
+        ->limit(1)
+        ->delete();
+    }
 
     $insertItems = [];
     foreach ($receiveItemsIds as $i) {
@@ -79,9 +82,7 @@ class ItemController extends Controller
       ->insert($insertItems);
 
     return $this->sendResponse([
-      'inventory' => InventoryResource::collection(Auth::user()->inventory()),
-      $sumForChange,
-      $sumForReceive,
+      'inventory' => InventoryResource::collection(Auth::user()->inventory())
     ], 'Ok', 200);
 
   }

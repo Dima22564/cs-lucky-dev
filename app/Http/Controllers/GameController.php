@@ -170,6 +170,7 @@ class GameController extends Controller
       ->where('game_id', $game->id)
       ->where('user_id', Auth::user()->id)
       ->where('is_win', null)
+      ->with('winItem')
       ->first();
 
     $win = round($bet->bank * $multiplier, 2);
@@ -185,18 +186,14 @@ class GameController extends Controller
       'item_id' => $winItem->id
     ]);
 
-//    TODO Add win item idW
-//
     DB::table('inventories')
       ->insert([
         'user_id' => Auth::user()->id,
         'item_id' => $winItem->id
       ]);
 
-//    TODO change user balance
-
     return $this->sendResponse([
-      'bet' => new BetResource($bet)
+      'bet' => new BetResource($bet->refresh())
     ], 'Ok', 200);
 
   }
@@ -223,8 +220,7 @@ class GameController extends Controller
         ->where('price', '<=', $winBank)
         ->orderBy('price', 'DESC')
         ->first();
-      // TODO change user balance
-      // TODO add win item
+
       $bet->update([
         'is_win' => 1,
         'win_bank' => $winBank,
@@ -239,6 +235,7 @@ class GameController extends Controller
         $query->select('id', 'avatar');
       }])
       ->with('items')
+      ->with('winItem')
       ->get()
       ->sortBy('created_at')
       ->reverse();

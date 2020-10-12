@@ -15,6 +15,7 @@ class Bet extends Model
     'bank',
     'skins',
     'win_bank',
+    'item_id',
     'multiplier'];
 
   public function user()

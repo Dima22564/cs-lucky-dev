@@ -28,7 +28,7 @@ class ChatController extends Controller
     event(new Message($chat));
   }
 
-  public function index() 
+  public function index()
   {
     $messages = Chat::with('user')->orderBy('created_at', 'desc')->take(50)->get()->reverse()->values();
 
